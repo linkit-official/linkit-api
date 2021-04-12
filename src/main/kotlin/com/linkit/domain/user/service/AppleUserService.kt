@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ApppleUserService(
+class AppleUserService(
     private val appleUserRepository: AppleUserRepository
 ) {
     @Transactional
@@ -27,6 +27,15 @@ class ApppleUserService(
     @Transactional(readOnly = true)
     fun get(appleId: String): AppleUser {
         return load(appleId)
+    }
+
+    @Transactional(readOnly = true)
+    fun isExist(appleId: String): Boolean {
+        return this.existsByAppleId(appleId)
+    }
+
+    private fun existsByAppleId(appleId: String): Boolean {
+        return appleUserRepository.existsById(appleId)
     }
 
     private fun save(appleUser: AppleUser): AppleUser {

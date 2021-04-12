@@ -1,4 +1,4 @@
-package com.linkit.api.health.controller
+package com.linkit.commons.controller
 
 import com.linkit.commons.dto.ApiResponse
 import org.springframework.web.bind.annotation.GetMapping

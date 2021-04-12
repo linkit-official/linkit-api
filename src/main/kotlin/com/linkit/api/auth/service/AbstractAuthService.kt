@@ -8,7 +8,7 @@ import com.linkit.domain.user.model.User
 abstract class AbstractAuthService<T : RegisterRequest, S : LoginRequest> {
     fun register(registerRequest: T): User {
         if (isExistAccount(registerRequest)) {
-            throw AccountAlreadyExistException()
+            throw AccountAlreadyExistException("Account already exist")
         }
         validateRequest(registerRequest)
         return createAccount(registerRequest)

@@ -1,0 +1,2 @@
+rootProject.name = "linkit-api"
+

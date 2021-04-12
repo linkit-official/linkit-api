@@ -56,7 +56,6 @@ tasks {
             freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = javaVersion
         }
-        dependsOn(processResources)
     }
 
     compileTestKotlin {

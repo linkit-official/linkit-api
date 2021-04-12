@@ -1,0 +1,42 @@
+package com.linkit.domain.user.service
+
+import com.linkit.commons.utils.KotlinUtils.toNullable
+import com.linkit.domain.user.dto.AppleUserCreateParameter
+import com.linkit.commons.exception.UserNotFoundException
+import com.linkit.domain.user.model.AppleUser
+import com.linkit.domain.user.repository.AppleUserRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+@Service
+class ApppleUserService(
+    private val appleUserRepository: AppleUserRepository
+) {
+    @Transactional
+    fun create(parameter: AppleUserCreateParameter): AppleUser {
+        return save(
+            AppleUser(
+                appleId = parameter.appleId,
+                lastAccessToken = parameter.lastAccessToken,
+                userId = parameter.userId
+            )
+        )
+    }
+
+    @Transactional(readOnly = true)
+    fun get(appleId: String): AppleUser {
+        return load(appleId)
+    }
+
+    private fun save(appleUser: AppleUser): AppleUser {
+        return appleUserRepository.save(appleUser)
+    }
+
+    private fun load(appleId: String): AppleUser {
+        return appleUserRepository.findById(appleId).toNullable() ?: throw UserNotFoundException()
+    }
+
+    private fun loadByUserId(userId: Long): AppleUser {
+        return appleUserRepository.findByUserId(userId) ?: throw UserNotFoundException()
+    }
+}

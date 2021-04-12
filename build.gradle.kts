@@ -7,8 +7,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.32"
 }
 
+val javaVersion = JavaVersion.VERSION_1_8.toString()
+
 group = "com.linkit"
-version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -32,13 +33,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
-//    implementation("javax.servlet:javax.servlet-api:3.0.1")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("mysql:mysql-connector-java:8.0.13")
-}
 
-val javaVersion = JavaVersion.VERSION_1_8.toString()
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+}
 
 tasks {
     compileJava {

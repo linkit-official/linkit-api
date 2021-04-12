@@ -22,6 +22,7 @@ class GlobalErrorController @Autowired constructor(
 
     companion object {
         const val ERROR_PATH = "\${error.path:/error}"
+        const val DEFAULT_EXCEPTION = "java.lang.Exception"
         val errorAttributeOptions: ErrorAttributeOptions = ErrorAttributeOptions.of(
             ErrorAttributeOptions.Include.EXCEPTION,
             ErrorAttributeOptions.Include.BINDING_ERRORS,
@@ -31,6 +32,7 @@ class GlobalErrorController @Autowired constructor(
 
     @RequestMapping(ERROR_PATH)
     fun error(request: HttpServletRequest): ResponseEntity<ErrorResponse> {
+
         val status = getStatus(request)
         if (status == HttpStatus.NO_CONTENT) {
             return ResponseEntity<ErrorResponse>(status)
@@ -40,7 +42,7 @@ class GlobalErrorController @Autowired constructor(
         val errorResponse = ErrorResponse(
             error = ErrorResponse.ErrorInfo(
                 code = status.value(),
-                exception = (errorAttributes["exception"] as String).substringAfterLast("."),
+                exception = ((errorAttributes["exception"] ?: DEFAULT_EXCEPTION) as String).substringAfterLast("."),
                 message = errorAttributes["message"] as String,
                 path = errorAttributes["path"] as String
             )

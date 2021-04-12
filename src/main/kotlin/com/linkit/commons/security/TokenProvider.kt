@@ -10,7 +10,7 @@ interface TokenProvider {
     fun createToken(userId: Long, username: String, roles: Set<Role>): Token
     fun refreshToken(refreshToken: String): Token
     fun validateAccessToken(accessToken: String): Boolean
-    fun removePrefix(token: String): String
+    fun removePrefix(token: String?): String
     fun getAuthentication(accessToken: String): Authentication
 }
 

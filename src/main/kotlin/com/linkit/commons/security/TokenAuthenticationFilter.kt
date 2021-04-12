@@ -29,7 +29,7 @@ class TokenAuthenticationFilter(
         chain.doFilter(request, response)
     }
 
-    private fun resolveToken(request: HttpServletRequest): String {
+    private fun resolveToken(request: HttpServletRequest): String? {
         return request.getHeader(AUTHORIZATION)
     }
 }

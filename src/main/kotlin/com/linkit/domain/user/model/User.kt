@@ -1,6 +1,5 @@
 package com.linkit.domain.user.model
 
-import com.linkit.commons.utils.RoleSetConverter
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -23,7 +22,7 @@ class User(
     var email: String?,
     val loginType: LoginType,
     @Convert(converter = RoleSetConverter::class)
-    val role: Set<Role>,
+    val roles: Set<Role>,
     @Column(updatable = false)
     @CreationTimestamp
     val createdDateTime: LocalDateTime = LocalDateTime.now(),

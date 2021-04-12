@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 class TokenAuthenticationProvider(private val tokenProvider: TokenProvider) : AuthenticationProvider {
 
     override fun authenticate(authentication: Authentication): Authentication {
-        val token = tokenProvider.removePrefix(authentication.principal.toString())
+        val token = tokenProvider.removePrefix(authentication.principal?.toString())
         return tokenProvider.getAuthentication(token)
     }
 

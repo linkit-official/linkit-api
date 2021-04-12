@@ -19,7 +19,7 @@ class UserService(
                 email = parameter.email,
                 nickName = parameter.nickName,
                 loginType = parameter.loginType,
-                role = parameter.roles
+                roles = parameter.roles
             )
         )
     }

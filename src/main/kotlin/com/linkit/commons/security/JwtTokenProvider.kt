@@ -47,11 +47,13 @@ class JwtTokenProvider(
         return validateToken(accessToken, accessSecretKey)
     }
 
-    override fun removePrefix(token: String): String {
-        if (!token.startsWith(BEARER_TYPE)) {
-            throw InvalidTokenException("Token type error")
-        }
-        return token.substring(BEARER_TYPE.length).trim()
+    override fun removePrefix(token: String?): String {
+        token?.let {
+            if (!token.startsWith(BEARER_TYPE)) {
+                throw InvalidTokenException("Token type error")
+            }
+            return token.substring(BEARER_TYPE.length).trim()
+        } ?: throw InvalidTokenException("Token is null")
     }
 
     override fun getAuthentication(accessToken: String): Authentication {

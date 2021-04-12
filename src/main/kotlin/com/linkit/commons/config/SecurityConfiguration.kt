@@ -1,5 +1,6 @@
 package com.linkit.commons.config
 
+import com.linkit.commons.security.NoRedirectStrategy
 import com.linkit.commons.security.TokenAuthenticationFilter
 import com.linkit.commons.security.TokenAuthenticationProvider
 import org.springframework.context.annotation.Bean
@@ -55,6 +56,8 @@ class SecurityConfiguration(
 
     @Bean
     fun successHandler(): SimpleUrlAuthenticationSuccessHandler {
+        val successHandler = SimpleUrlAuthenticationSuccessHandler()
+        successHandler.setRedirectStrategy(NoRedirectStrategy())
         return SimpleUrlAuthenticationSuccessHandler()
     }
 }

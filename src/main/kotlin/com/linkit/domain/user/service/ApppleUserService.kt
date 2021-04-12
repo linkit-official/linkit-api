@@ -4,6 +4,7 @@ import com.linkit.commons.utils.KotlinUtils.toNullable
 import com.linkit.domain.user.dto.AppleUserCreateParameter
 import com.linkit.commons.exception.UserNotFoundException
 import com.linkit.domain.user.model.AppleUser
+import com.linkit.domain.user.model.User
 import com.linkit.domain.user.repository.AppleUserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,12 +14,12 @@ class ApppleUserService(
     private val appleUserRepository: AppleUserRepository
 ) {
     @Transactional
-    fun create(parameter: AppleUserCreateParameter): AppleUser {
+    fun create(parameter: AppleUserCreateParameter, user: User): AppleUser {
         return save(
             AppleUser(
                 appleId = parameter.appleId,
                 lastAccessToken = parameter.lastAccessToken,
-                userId = parameter.userId
+                user = user
             )
         )
     }

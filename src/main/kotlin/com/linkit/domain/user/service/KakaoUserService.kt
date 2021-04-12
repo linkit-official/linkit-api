@@ -4,6 +4,7 @@ import com.linkit.commons.utils.KotlinUtils.toNullable
 import com.linkit.domain.user.dto.KakaoUserCreateParameter
 import com.linkit.commons.exception.UserNotFoundException
 import com.linkit.domain.user.model.KakaoUser
+import com.linkit.domain.user.model.User
 import com.linkit.domain.user.repository.KakaoUserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,12 +14,12 @@ class KakaoUserService(
     private val kakaoUserRepository: KakaoUserRepository
 ) {
     @Transactional
-    fun create(parameter: KakaoUserCreateParameter): KakaoUser {
+    fun create(parameter: KakaoUserCreateParameter, user: User): KakaoUser {
         return save(
             KakaoUser(
                 kakaoId = parameter.kakaoId,
                 lastAccessToken = parameter.lastAccessToken,
-                userId = parameter.userId
+                user = user
             )
         )
     }

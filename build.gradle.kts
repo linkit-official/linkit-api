@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt") version "1.4.32"
     id("org.springframework.boot") version "2.4.4"
     id("org.jetbrains.kotlin.plugin.spring") version "1.4.32"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.32"
 }
 
 group = "com.linkit"
@@ -20,7 +20,7 @@ apply(plugin = "kotlin-kapt")
 apply(plugin = "org.springframework.boot")
 apply(plugin = "io.spring.dependency-management")
 apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
+apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

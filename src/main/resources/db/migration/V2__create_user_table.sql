@@ -1,0 +1,28 @@
+CREATE TABLE `User` (
+   `id` BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+   `uuid` VARCHAR(255) NOT NULL,
+   `nickName` VARCHAR(255) NOT NULL,
+   `email` VARCHAR(100) NULL,
+   `loginType` VARCHAR(20) NOT NULL,
+   `roles` VARCHAR(100) NOT NULL,
+   `createdDateTime` DATETIME(6) NOT NULL,
+   `updatedDateTime` DATETIME(6) NOT NULL,
+   UNIQUE KEY `UK_User_uuid` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `KakaoUser` (
+  `kakaoId` VARCHAR(255) NOT NULL,
+  `lastAccessToken` VARCHAR(255) NOT NULL,
+  `userId` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`kakaoId`),
+  FOREIGN KEY (`userId`) REFERENCES User(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `AppleUser` (
+  `appleId` VARCHAR(255) NOT NULL,
+  `lastAccessToken` VARCHAR(255) NOT NULL,
+  `userId` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`appleId`),
+  FOREIGN KEY (`userId`) REFERENCES User(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

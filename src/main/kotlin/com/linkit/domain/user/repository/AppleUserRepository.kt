@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AppleUserRepository : JpaRepository<AppleUser, String> {
     fun findByUserId(userId: Long): AppleUser?
+    fun deleteByUserId(userId: Long)
 }

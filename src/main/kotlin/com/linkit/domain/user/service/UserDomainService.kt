@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserService(
+class UserDomainService(
     private val userRepository: UserRepository
 ) {
     @Transactional
@@ -29,11 +29,20 @@ class UserService(
         return load(userId)
     }
 
+    @Transactional
+    fun delete(userId: Long) {
+        return remove(userId)
+    }
+
     private fun save(user: User): User {
         return userRepository.save(user)
     }
 
     private fun load(userId: Long): User {
         return userRepository.findById(userId).toNullable() ?: throw UserNotFoundException()
+    }
+
+    private fun remove(userId: Long) {
+        userRepository.deleteById(userId)
     }
 }

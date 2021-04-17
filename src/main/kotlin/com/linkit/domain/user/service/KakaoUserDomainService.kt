@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class KakaoUserService(
+class KakaoUserDomainService(
     private val kakaoUserRepository: KakaoUserRepository
 ) {
     @Transactional
@@ -34,6 +34,11 @@ class KakaoUserService(
         return this.existsByKakaoId(kakaoId)
     }
 
+    @Transactional
+    fun delete(userId: Long) {
+        this.deleteByUserId(userId)
+    }
+
     private fun existsByKakaoId(kakaoId: String): Boolean {
         return kakaoUserRepository.existsById(kakaoId)
     }
@@ -48,5 +53,9 @@ class KakaoUserService(
 
     private fun loadByUserId(userId: Long): KakaoUser {
         return kakaoUserRepository.findByUserId(userId) ?: throw UserNotFoundException()
+    }
+
+    private fun deleteByUserId(userId: Long) {
+        kakaoUserRepository.deleteByUserId(userId)
     }
 }

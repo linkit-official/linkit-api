@@ -8,15 +8,15 @@ import com.linkit.domain.user.dto.UserCreateParameter
 import com.linkit.domain.user.model.LoginType
 import com.linkit.domain.user.model.Role
 import com.linkit.domain.user.model.User
-import com.linkit.domain.user.service.AppleUserService
-import com.linkit.domain.user.service.UserService
+import com.linkit.domain.user.service.AppleUserDomainService
+import com.linkit.domain.user.service.UserDomainService
 import org.springframework.stereotype.Service
 
 @Service
 class AppleAuthService(
-    private val appleUserService: AppleUserService,
-    private val userService: UserService
-) : AbstractAuthService<AppleRegisterRequest, AppleLoginRequest>() {
+    private val appleUserDomainService: AppleUserDomainService,
+    private val userDomainService: UserDomainService
+) : AbstractAuthService<AppleRegisterRequest, AppleLoginRequest>(userDomainService) {
 
     override fun validateRequest(registerRequest: AppleRegisterRequest) {
         registerRequest.email?.let {
@@ -25,11 +25,11 @@ class AppleAuthService(
     }
 
     override fun isExistAccount(registerRequest: AppleRegisterRequest): Boolean {
-        return appleUserService.isExist(registerRequest.appleId)
+        return appleUserDomainService.isExist(registerRequest.appleId)
     }
 
     override fun createAccount(registerRequest: AppleRegisterRequest): User {
-        val user = userService.create(
+        val user = userDomainService.create(
             UserCreateParameter(
                 email = registerRequest.email,
                 nickName = registerRequest.nickname ?: "NickName", // TODO 닉네임 제조기
@@ -37,7 +37,7 @@ class AppleAuthService(
                 roles = setOf(Role.ROLE_BASIC)
             )
         )
-        appleUserService.create(
+        appleUserDomainService.create(
             AppleUserCreateParameter(
                 appleId = registerRequest.appleId,
                 lastAccessToken = registerRequest.accessToken
@@ -48,6 +48,10 @@ class AppleAuthService(
     }
 
     override fun verifyAccount(loginRequest: AppleLoginRequest): User {
-        return appleUserService.get(loginRequest.appleId).user
+        return appleUserDomainService.get(loginRequest.appleId).user
+    }
+
+    override fun deleteAccount(userId: Long) {
+        appleUserDomainService.delete(userId)
     }
 }

@@ -7,6 +7,7 @@ import com.linkit.api.auth.dto.KakaoRegisterRequest
 import com.linkit.api.auth.service.AuthApiService
 import com.linkit.commons.dto.ApiResponse
 import com.linkit.commons.dto.Token
+import com.linkit.commons.security.UserSessionUtils
 import io.swagger.annotations.ApiOperation
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.transaction.annotation.Transactional
@@ -24,6 +25,15 @@ class AuthController(
     @PreAuthorize("hasRole('BASIC')")
     @GetMapping("/verify")
     fun verifyToken() = ApiResponse.of(true)
+
+    @ApiOperation(
+        value = "탈퇴 API",
+        notes = "accessToken 을 보내면 탈퇴시키는 API"
+    )
+    @PreAuthorize("hasRole('BASIC')")
+    @DeleteMapping
+    fun withdrawUser() = ApiResponse.of(authApiService.withdrawUser(UserSessionUtils.getCurrentUserId()))
+
 
     @ApiOperation(
         value = "Kakao 회원가입 API",

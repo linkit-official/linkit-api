@@ -8,15 +8,15 @@ import com.linkit.domain.user.dto.UserCreateParameter
 import com.linkit.domain.user.model.LoginType
 import com.linkit.domain.user.model.Role
 import com.linkit.domain.user.model.User
-import com.linkit.domain.user.service.KakaoUserService
-import com.linkit.domain.user.service.UserService
+import com.linkit.domain.user.service.KakaoUserDomainService
+import com.linkit.domain.user.service.UserDomainService
 import org.springframework.stereotype.Service
 
 @Service
 class KakaoAuthService(
-    private val kakaoUserService: KakaoUserService,
-    private val userService: UserService
-) : AbstractAuthService<KakaoRegisterRequest, KakaoLoginRequest>() {
+    private val kakaoUserDomainService: KakaoUserDomainService,
+    private val userDomainService: UserDomainService
+) : AbstractAuthService<KakaoRegisterRequest, KakaoLoginRequest>(userDomainService) {
 
     override fun validateRequest(registerRequest: KakaoRegisterRequest) {
         registerRequest.email?.let {
@@ -25,11 +25,11 @@ class KakaoAuthService(
     }
 
     override fun isExistAccount(registerRequest: KakaoRegisterRequest): Boolean {
-        return kakaoUserService.isExist(registerRequest.kakaoId)
+        return kakaoUserDomainService.isExist(registerRequest.kakaoId)
     }
 
     override fun createAccount(registerRequest: KakaoRegisterRequest): User {
-        val user = userService.create(
+        val user = userDomainService.create(
             UserCreateParameter(
                 email = registerRequest.email,
                 nickName = registerRequest.nickname ?: "NickName", // TODO 닉네임 제조기
@@ -37,7 +37,7 @@ class KakaoAuthService(
                 roles = setOf(Role.ROLE_BASIC)
             )
         )
-        kakaoUserService.create(
+        kakaoUserDomainService.create(
             KakaoUserCreateParameter(
                 kakaoId = registerRequest.kakaoId,
                 lastAccessToken = registerRequest.accessToken
@@ -48,6 +48,10 @@ class KakaoAuthService(
     }
 
     override fun verifyAccount(loginRequest: KakaoLoginRequest): User {
-        return kakaoUserService.get(loginRequest.kakaoId).user
+        return kakaoUserDomainService.get(loginRequest.kakaoId).user
+    }
+
+    override fun deleteAccount(userId: Long) {
+        kakaoUserDomainService.delete(userId)
     }
 }

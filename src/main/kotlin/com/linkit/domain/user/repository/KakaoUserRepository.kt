@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface KakaoUserRepository : JpaRepository<KakaoUser, String> {
     fun findByUserId(userId: Long): KakaoUser?
+    fun deleteByUserId(userId: Long)
 }

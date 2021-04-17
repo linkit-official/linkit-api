@@ -4,8 +4,11 @@ import com.linkit.api.auth.dto.LoginRequest
 import com.linkit.api.auth.dto.RegisterRequest
 import com.linkit.commons.exception.AccountAlreadyExistException
 import com.linkit.domain.user.model.User
+import com.linkit.domain.user.service.UserDomainService
 
-abstract class AbstractAuthService<T : RegisterRequest, S : LoginRequest> {
+abstract class AbstractAuthService<T : RegisterRequest, S : LoginRequest>(
+    private val userDomainService: UserDomainService
+) {
     fun register(registerRequest: T): User {
         if (isExistAccount(registerRequest)) {
             throw AccountAlreadyExistException("Account already exist")
@@ -22,4 +25,11 @@ abstract class AbstractAuthService<T : RegisterRequest, S : LoginRequest> {
     }
 
     protected abstract fun verifyAccount(loginRequest: S): User
+
+    fun withDraw(userId: Long) {
+        deleteAccount(userId)
+        userDomainService.delete(userId)
+    }
+
+    protected abstract fun deleteAccount(userId: Long)
 }

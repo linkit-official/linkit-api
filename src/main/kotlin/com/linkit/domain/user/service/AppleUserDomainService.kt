@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class AppleUserService(
+class AppleUserDomainService(
     private val appleUserRepository: AppleUserRepository
 ) {
     @Transactional
@@ -34,6 +34,11 @@ class AppleUserService(
         return this.existsByAppleId(appleId)
     }
 
+    @Transactional
+    fun delete(userId: Long) {
+        this.deleteByUserId(userId)
+    }
+
     private fun existsByAppleId(appleId: String): Boolean {
         return appleUserRepository.existsById(appleId)
     }
@@ -48,5 +53,9 @@ class AppleUserService(
 
     private fun loadByUserId(userId: Long): AppleUser {
         return appleUserRepository.findByUserId(userId) ?: throw UserNotFoundException()
+    }
+
+    private fun deleteByUserId(userId: Long) {
+        appleUserRepository.deleteByUserId(userId)
     }
 }

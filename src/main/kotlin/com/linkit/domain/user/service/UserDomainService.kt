@@ -1,8 +1,8 @@
 package com.linkit.domain.user.service
 
-import com.linkit.commons.utils.KotlinUtils.toNullable
+import com.linkit.core.utils.KotlinUtils.toNullable
 import com.linkit.domain.user.dto.UserCreateParameter
-import com.linkit.commons.exception.UserNotFoundException
+import com.linkit.core.exception.UserNotFoundException
 import com.linkit.domain.user.model.User
 import com.linkit.domain.user.repository.UserRepository
 import org.springframework.stereotype.Service

@@ -12,5 +12,11 @@ class CategoryDomainService(
     @Transactional(readOnly = true)
     fun getAll(): List<Category> = loadAll()
 
-    private fun loadAll() : List<Category> = categoryRepository.findAll()
+    @Transactional(readOnly = true)
+    fun getAll(categoryIds: List<String>): List<Category> = loadAllByCategoryIds(categoryIds)
+
+    private fun loadAll(): List<Category> = categoryRepository.findAll()
+
+    private fun loadAllByCategoryIds(categoryIds: List<String>): List<Category> =
+        categoryRepository.findAllById(categoryIds)
 }

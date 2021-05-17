@@ -7,5 +7,5 @@ import javax.persistence.Id
 class Category (
     @Id
     val id: String,
-    val text: String
+    val name: String
 )

@@ -1,0 +1,11 @@
+CREATE TABLE `Category` (
+   `id` VARCHAR(255) PRIMARY KEY,
+   `name` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `UserCategory` (
+  `id` BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+  `userId` BIGINT(20) NOT NULL,
+  `categoryId` VARCHAR(255) NOT NULL,
+  KEY `IDX_UserCategory_userId` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

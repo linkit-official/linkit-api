@@ -12,7 +12,7 @@ CREATE TABLE `User` (
 
 CREATE TABLE `KakaoUser` (
   `kakaoId` VARCHAR(255) NOT NULL,
-  `lastAccessToken` VARCHAR(255) NOT NULL,
+  `lastAccessToken` VARCHAR(1000) NOT NULL,
   `userId` BIGINT(20) NOT NULL,
   PRIMARY KEY (`kakaoId`),
   FOREIGN KEY (`userId`) REFERENCES User(`id`) ON DELETE CASCADE
@@ -20,7 +20,7 @@ CREATE TABLE `KakaoUser` (
 
 CREATE TABLE `AppleUser` (
   `appleId` VARCHAR(255) NOT NULL,
-  `lastAccessToken` VARCHAR(255) NOT NULL,
+  `lastAccessToken` VARCHAR(1000) NOT NULL,
   `userId` BIGINT(20) NOT NULL,
   PRIMARY KEY (`appleId`),
   FOREIGN KEY (`userId`) REFERENCES User(`id`) ON DELETE CASCADE

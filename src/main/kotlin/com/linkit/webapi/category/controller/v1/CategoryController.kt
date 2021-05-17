@@ -33,7 +33,7 @@ class CategoryController(
     @PreAuthorize("hasRole('BASIC')")
     @GetMapping("/user")
     fun getUserCategoryList(): ApiResponse<CategoryInfoListResponse> =
-        ApiResponse.of(CategoryInfoListResponse(categoryService.getCategoryList()))
+        ApiResponse.of(CategoryInfoListResponse(categoryService.getUserCategoryList()))
 
     @ApiOperation(
         nickname = "registerUserCategoryList",
@@ -42,7 +42,7 @@ class CategoryController(
     )
     @PreAuthorize("hasRole('BASIC')")
     @PostMapping("/user")
-    fun registerUserCategoryList(request: UserCategoryListRequest): ApiResponse<CategoryInfoListResponse> =
+    fun registerUserCategoryList(@RequestBody request: UserCategoryListRequest): ApiResponse<CategoryInfoListResponse> =
         ApiResponse.of(CategoryInfoListResponse(categoryService.registerUserCategoryList(request)))
 
     companion object {

@@ -26,11 +26,11 @@ class CategoryService(
 
     @Transactional
     fun registerUserCategoryList(request: UserCategoryListRequest): List<CategoryInfo> {
-        deleteUserCategoryList()
+        deleteUserCategoryList(UserSessionUtils.getCurrentUserId())
         return categoryDomainService.getAll(userCategoryDomainService.createAll(request.categoryIds.map {
             UserCategoryCreateParameter(userId = UserSessionUtils.getCurrentUserId(), categoryId = it)
         }).map { it.categoryId }).map { CategoryInfo.from(it) }
     }
 
-    private fun deleteUserCategoryList() = userCategoryDomainService.deleteAll(UserSessionUtils.getCurrentUserId())
+    private fun deleteUserCategoryList(userId: Long) = userCategoryDomainService.deleteAll(userId)
 }
